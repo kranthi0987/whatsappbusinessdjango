@@ -26,6 +26,7 @@ import {
 } from 'reactstrap';
 import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css";
+import ProgressButton from 'react-progress-button'
 
 class BulkMessages extends Component {
     constructor(props) {
@@ -46,7 +47,8 @@ class BulkMessages extends Component {
             submitted: false,
             loading: false,
             error: '',
-            vcardfile: ''
+            vcardfile: '',
+            buttonState: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -65,7 +67,7 @@ class BulkMessages extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
+        this.setState({buttonState: 'loading'})
         this.setState({submitted: true});
         const {from_who = ['9989015918'], to_who, message_status, message} = this.state;
 
@@ -103,9 +105,11 @@ class BulkMessages extends Component {
                     duration: 2000, type: "success"
                 });
                 this.clearForm();
+                this.setState({buttonState: 'success'})
                 return response.json()
             } else {
                 console.log("oh no!", response.status === 404)
+                  this.setState({buttonState: 'error'})
             }
         }).then(function (data) {
             console.log('request succeeded with JSON response', data)
@@ -117,7 +121,8 @@ class BulkMessages extends Component {
         this.setState({
             message: '',
             to_who: '',
-            vcardfile: ''
+            vcardfile: '',
+            submitted: false
         })
     }
 
@@ -127,7 +132,7 @@ class BulkMessages extends Component {
     }
 
     render() {
-        const {from_who, to_who, message_status, submitted, message,vcardfile} = this.state;
+        const {from_who, to_who, message_status, submitted, message, vcardfile} = this.state;
         return (
             <div className="animated fadeIn">
                 <Row>
@@ -185,8 +190,8 @@ class BulkMessages extends Component {
                                 </Form>
                             </CardBody>
                             <CardFooter>
-                                <Button type="submit" size="sm" color="primary" onClick={this.handleSubmit}><i
-                                    className="fa fa-dot-circle-o"></i> Submit</Button>
+                                <ProgressButton type="submit" size="sm" color="primary" onClick={this.handleSubmit}><i
+                                    className="fa fa-dot-circle-o"></i> Submit</ProgressButton>
                                 <Button type="reset" size="sm" color="danger"><i
                                     className="fa fa-ban"></i> Reset</Button>
                             </CardFooter>
