@@ -86,8 +86,8 @@ DATABASES = {
         'NAME': 'whatsappbussiness',
         'ENGINE': 'mysql.connector.django',
         'USER': 'root',
-        'PASSWORD': 'root',
-        # 'PASSWORD': '1qaz2wsx',
+        # 'PASSWORD': 'root',
+        'PASSWORD': '1qaz2wsx',
         # 'HOST': '13.232.42.167',
         # 'PORT': '3306',
         'OPTIONS': {
