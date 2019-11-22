@@ -25,7 +25,7 @@ import {
     Row,
 } from 'reactstrap';
 // Import React FilePond
-import { FilePond, registerPlugin } from 'react-filepond';
+import {FilePond, registerPlugin} from 'react-filepond';
 
 // Import FilePond styles
 import 'filepond/dist/filepond.min.css';
@@ -37,7 +37,10 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css";
-registerPlugin(FilePondPluginImagePreview,FilePondPluginImageExifOrientation);
+import {setOptions} from "filepond";
+
+registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
+
 class MultiMediaMessages extends Component {
     constructor(props) {
         super(props);
@@ -60,6 +63,28 @@ class MultiMediaMessages extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        setOptions({
+            server: {
+                url: 'http://localhost:8000',
+                timeout: 7000,
+                process: {
+                    url: '/mediaupload/fileupload/',
+                    method: 'POST',
+                    headers: {},
+                    withCredentials: false,
+                    onload: (response) => console.log(response),
+                    onerror: (response) => console.log(response.data),
+                    // ondata: (formData) => {
+                    //     formData.append('Hello', 'World');
+                    //     return formData;
+                    // }
+                },
+                // revert: './revert',
+                // restore: './restore/',
+                // load: './load/',
+                // fetch: './fetch/'
+            }
+        });
     }
 
     toggle() {
@@ -97,14 +122,12 @@ class MultiMediaMessages extends Component {
 
         fetch(url, {
             method: "POST",
-            headers: ({
-
-            }),
+            headers: ({}),
             body: formData
         }).then(response => {
             if (response.status === 201) {
                 console.log(response);
-                 toaster.notify("Sucessfull message sent", {
+                toaster.notify("Sucessfull message sent", {
                     duration: 2000, type: "success"
                 });
                 return response.json()
@@ -143,16 +166,10 @@ class MultiMediaMessages extends Component {
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="text-input">Mobile Number</Label>
+                                            <Label htmlFor="file-input">Vcard </Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="text-input" name="to_who" value={to_who}
-                                                   onChange={this.handleChange}
-                                                   placeholder="Mobile number"/>
-                                            {submitted && !to_who &&
-                                            <div className="help-block">Mobilenumber is required</div>
-                                            }
-                                            <FormText color="muted">Enter Mobile Number with Country Code</FormText>
+                                            <Input type="file" id="file-input" name="file-input"/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -164,18 +181,11 @@ class MultiMediaMessages extends Component {
                                                    value={message} onChange={this.handleChange}
                                                    placeholder="Message Content..."/>
                                             {submitted && !message &&
-                                            <div className="help-block">message is required</div>
+                                            <div className="help-block">Text under the file</div>
                                             }
                                         </Col>
                                     </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="file-input">Vcard </Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            <Input type="file" id="file-input" name="file-input"/>
-                                        </Col>
-                                    </FormGroup>
+
                                     <FormGroup row>
                                         <Col md="3">
                                             <Label htmlFor="file-multiple-input">Multiple File input</Label>
@@ -183,13 +193,14 @@ class MultiMediaMessages extends Component {
                                         <Col xs="12" md="9">
                                             {/*<Input type="file" id="file-multiple-input" name="file-multiple-input"*/}
                                             {/*       multiple/>*/}
-                                            <FilePond allowMultiple={true} maxFiles={5} server='http://localhost:8000/mediaupload/fileupload/'/>
+                                            <FilePond allowMultiple={true} maxFiles={5}/>
                                         </Col>
                                     </FormGroup>
                                 </Form>
                             </CardBody>
                             <CardFooter>
-                                <Button type="submit" size="sm" color="primary" onClick={this.handleSubmit}><i className="fa fa-dot-circle-o"></i> Submit</Button>
+                                <Button type="submit" size="sm" color="primary" onClick={this.handleSubmit}><i
+                                    className="fa fa-dot-circle-o"></i> Submit</Button>
                                 <Button type="reset" size="sm" color="danger"><i
                                     className="fa fa-ban"></i> Reset</Button>
                             </CardFooter>

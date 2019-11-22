@@ -186,12 +186,13 @@ class BulkMessages extends Component {
                                             <Input type="file" id="file-input"
                                                    name="vcardfile"/>
                                         </Col>
+                                        <a href='http://localhost:8000/media/samplcsv/excel.csv' download>Click to download samplecsv</a>
                                     </FormGroup>
                                 </Form>
                             </CardBody>
                             <CardFooter>
-                                <ProgressButton type="submit" size="sm" color="primary" onClick={this.handleSubmit}><i
-                                    className="fa fa-dot-circle-o"></i> Submit</ProgressButton>
+                                <Button type="submit" size="sm" color="primary" onClick={this.handleSubmit}><i
+                                    className="fa fa-dot-circle-o"></i> Submit</Button>
                                 <Button type="reset" size="sm" color="danger"><i
                                     className="fa fa-ban"></i> Reset</Button>
                             </CardFooter>

@@ -25,7 +25,7 @@ import {
     Row,
 } from 'reactstrap';
 // Import React FilePond
-import { FilePond, registerPlugin } from 'react-filepond';
+import {FilePond, registerPlugin} from 'react-filepond';
 
 // Import FilePond styles
 import 'filepond/dist/filepond.min.css';
@@ -37,7 +37,9 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css";
-registerPlugin(FilePondPluginImagePreview,FilePondPluginImageExifOrientation);
+
+registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
+
 class Messages extends Component {
     constructor(props) {
         super(props);
@@ -60,6 +62,7 @@ class Messages extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.clearForm = this.clearForm.bind(this);
     }
 
     toggle() {
@@ -97,17 +100,15 @@ class Messages extends Component {
 
         fetch(url, {
             method: "POST",
-            headers: ({
-
-            }),
+            headers: ({}),
             body: formData
         }).then(response => {
             if (response.status === 200) {
                 console.log(response);
-                 toaster.notify("Sucessfull message sent", {
+                toaster.notify("Sucessfull message sent", {
                     duration: 2000, type: "success"
                 });
-                  this.setState({to_who: '', message: ''}) // <= here
+                this.clearForm();
                 return response.json()
             } else {
                 console.log("oh no!", response.status === 404)
@@ -117,6 +118,11 @@ class Messages extends Component {
         })
 
 
+    }
+
+    clearForm() {
+        this.setState({submitted: false});
+        this.setState({to_who: '', message: ''}) // <= here
     }
 
     handleChange(e) {
@@ -174,7 +180,8 @@ class Messages extends Component {
                                 </Form>
                             </CardBody>
                             <CardFooter>
-                                <Button type="submit" size="sm" color="primary" onClick={this.handleSubmit}><i className="fa fa-dot-circle-o"></i> Submit</Button>
+                                <Button type="submit" size="sm" color="primary" onClick={this.handleSubmit}><i
+                                    className="fa fa-dot-circle-o"></i> Submit</Button>
                                 <Button type="reset" size="sm" color="danger"><i
                                     className="fa fa-ban"></i> Reset</Button>
                             </CardFooter>
