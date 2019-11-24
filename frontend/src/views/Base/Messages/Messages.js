@@ -44,8 +44,6 @@ class Messages extends Component {
     constructor(props) {
         super(props);
 
-        this.toggle = this.toggle.bind(this);
-        this.toggleFade = this.toggleFade.bind(this);
         this.state = {
             collapse: true,
             fadeIn: true,
@@ -63,16 +61,6 @@ class Messages extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.clearForm = this.clearForm.bind(this);
-    }
-
-    toggle() {
-        this.setState({collapse: !this.state.collapse});
-    }
-
-    toggleFade() {
-        this.setState((prevState) => {
-            return {fadeIn: !prevState}
-        });
     }
 
     handleSubmit(e) {

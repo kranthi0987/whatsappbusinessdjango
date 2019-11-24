@@ -1,26 +1,14 @@
 import React, {Component} from 'react';
 import {
-    Badge,
     Button,
     Card,
     CardBody,
     CardFooter,
     CardHeader,
     Col,
-    Collapse,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    Fade,
     Form,
     FormGroup,
-    FormText,
-    FormFeedback,
     Input,
-    InputGroup,
-    InputGroupAddon,
-    InputGroupButtonDropdown,
-    InputGroupText,
     Label,
     Row,
 } from 'reactstrap';
@@ -44,12 +32,6 @@ registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
 class MultiMediaMessages extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            collapse: true,
-            fadeIn: true,
-            timeout: 300
-        };
         this.state = {
             from_who: '9989015918',
             to_who: '',
@@ -57,9 +39,9 @@ class MultiMediaMessages extends Component {
             message: '',
             submitted: false,
             loading: false,
-            error: ''
+            error: '',
+            tmpArray: []
         };
-        let tmpArray = [];
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.clearForm = this.clearForm.bind(this);
@@ -73,11 +55,10 @@ class MultiMediaMessages extends Component {
                     headers: {},
                     withCredentials: false,
                     onload: (response) => {
-                        tmpArray.push(response)
-                        console.log(response)
-                        console.log(tmpArray)
-                        this.checkandsend(tmpArray)
-
+                        this.state.tmpArray.push(response);
+                        console.log(response);
+                        console.log(this.state.tmpArray);
+                        this.checkandsend()
                     },
                     onerror: (response) => console.log(response.data),
                     // ondata: (formData) => {
@@ -93,27 +74,35 @@ class MultiMediaMessages extends Component {
         });
     }
 
-    checkandsend(tmpArray) {
-        const {from_who = ['9989015918'], to_who, message_status, message} = this.state;
+    checkandsend() {
+        console.log(this.state.tmpArray + 'inside check and send');
         if (this.state.submitted) {
-            for (var i = 0; i <= tmpArray; i++) {
-                this.Apicalling();
+            let arraydata = this.state.tmpArray
+            for (var i = 0; i <= arraydata.length; i++) {
+                var json_oject =JSON.parse(arraydata[i])
+                this.Apicalling(json_oject);
             }
         }
     }
 
-    Apicalling() {
-        const {from_who = ['9989015918'], to_who, message_status, message} = this.state;
+    Apicalling(json_oject) {
+        const {to_who, message} = this.state;
 
         let url = 'http://127.0.0.1:8000/mediaupload/multimediamessages/';
+const inputFiles = document.querySelectorAll('input[type="file"]');
 
-
+        console.log(json_oject)
         let formData = new FormData();
+        for (const file of inputFiles) {
+            formData.append('vcardfile', file.files[0]);
+        }
         formData.append('from_who', '9989015918');
         formData.append('phone', '91' + to_who);
-        formData.append('body', message);
-        formData.append('filename', message);
+        // formData.append('body', 'http://127.0.0.1:8000'+json_oject.filepond);
+        formData.append('body', 'https://i.ibb.co/5vv5V8s/asunabg.png');
+        formData.append('filename', json_oject.filepond.split('/').pop());
         formData.append('caption', message);
+        formData.append('content_type','image');
         formData.append('sent_status', 'true');
 
         fetch(url, {
@@ -138,18 +127,20 @@ class MultiMediaMessages extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const {from_who = ['9989015918'], to_who, message_status, message} = this.state;
+        const {from_who = ['9989015918'], to_who, message_status, submitted, message} = this.state;
         // stop here if form is invalid
         if (!(message)) {
             return;
         }
         this.setState({submitted: true});
         console.log(to_who, message);
+        this.checkandsend();
     }
 
     clearForm() {
         this.setState({submitted: false});
         this.setState({to_who: '', message: ''}) // <= here
+
     }
 
     handleChange(e) {
@@ -182,9 +173,20 @@ class MultiMediaMessages extends Component {
                                             <Label htmlFor="file-input">Vcard </Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="file" id="file-input" name="file-input"/>
+                                            <Input type="file" id="file-input" accept=".csv" name="vcardfile"/>
                                             <a href='http://localhost:8000/media/samplecsv/excel.csv' download>Click to
                                                 download samplecsv</a>
+                                        </Col>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="file-multiple-input">Multiple File input</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            {/*<Input type="file" id="file-multiple-input" name="file-multiple-input"*/}
+                                            {/*       multiple/>*/}
+                                            <FilePond allowMultiple={true} maxFiles={3}/>
+                                            <p>Max Files:<strong>3</strong></p>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -201,17 +203,7 @@ class MultiMediaMessages extends Component {
                                         </Col>
                                     </FormGroup>
 
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="file-multiple-input">Multiple File input</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            {/*<Input type="file" id="file-multiple-input" name="file-multiple-input"*/}
-                                            {/*       multiple/>*/}
-                                            <FilePond allowMultiple={true} maxFiles={3}/>
-                                            <p>Max Files:<strong>3</strong></p>
-                                        </Col>
-                                    </FormGroup>
+
                                 </Form>
                             </CardBody>
                             <CardFooter>
