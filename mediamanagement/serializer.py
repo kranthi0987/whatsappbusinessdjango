@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from mediamanagement.models import MediaManageModel, MediaFileModel
+from mediamanagement.models import MediaMessageModel, MediaFileModel
 
 
 class MediaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MediaManageModel
+        model = MediaMessageModel
         fields = "__all__"
 
 

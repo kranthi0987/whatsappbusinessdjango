@@ -86,8 +86,8 @@ DATABASES = {
         'NAME': 'whatsappbussiness',
         'ENGINE': 'mysql.connector.django',
         'USER': 'root',
-        # 'PASSWORD': 'root',
-        'PASSWORD': '1qaz2wsx',
+        'PASSWORD': 'root',
+        # 'PASSWORD': '1qaz2wsx',
         # 'HOST': '13.232.42.167',
         # 'PORT': '3306',
         'OPTIONS': {
@@ -146,7 +146,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 settings.AUTH_USER_MODEL = 'accountapi.User'
 
-Chat_api_token = '?token=wgutfnak2j7963l9'
+Chat_api_token = '?token=vysvunfo7ww3udw0'
 Chat_api_message = 'sendMessage'
-Chat_api_sending_message = 'https://eu39.chat-api.com/instance81157/'
+Chat_api_sending_message = 'https://eu82.chat-api.com/instance82077/'
 Chat_api_media = 'sendFile'
