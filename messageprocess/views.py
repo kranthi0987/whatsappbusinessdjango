@@ -17,15 +17,20 @@ from messageprocess.serializer import MessageSerializer, SendingMessageSerialize
 from whatsappbusiness.settings import Chat_api_sending_message, Chat_api_token, Chat_api_message
 
 
-def my_django_view(message_serializer):
+def SingleMessageSendingView(phone, body):
     global r
-    sending_message_serializer = SendingMessageSerializer(data=message_serializer.data)
-    if sending_message_serializer.is_valid():
-        r = requests.post(Chat_api_sending_message + Chat_api_message + Chat_api_token,
-                          data=sending_message_serializer.data)
-        if r.status_code == 200:
-            return Response(r, status=status.HTTP_200_OK)
-    return Response(r, status=status.HTTP_400_BAD_REQUEST)
+    # sending_message_serializer = SendingMessageSerializer(data=message_serializer.data)
+    # if sending_message_serializer.is_valid():
+    json_data = {'phone': phone, 'body': body}
+    # print(json.dumps(json_data))
+    # formdata = json.dumps(json_data)
+    r = requests.post(Chat_api_sending_message + Chat_api_message + Chat_api_token,
+                      json=json_data)
+    if r.status_code == 200:
+        print(r)
+        return Response(r, status=status.HTTP_200_OK)
+    else:
+        return Response(r, status=status.HTTP_400_BAD_REQUEST)
 
 
 def BulkMessagesSendingview(mobilenumber, message):
@@ -35,7 +40,7 @@ def BulkMessagesSendingview(mobilenumber, message):
     json_data = {'phone': mobilenumber, 'body': message}
     print(json.dumps(json_data))
     r = requests.post(Chat_api_sending_message + Chat_api_message + Chat_api_token,
-                      data=json.dumps(json_data))
+                      data=json_data)
     if r.status_code == 200:
         print(r)
         return Response(r, status=status.HTTP_200_OK)
@@ -64,29 +69,7 @@ class BulkMessageProcessView(APIView):
                     # Handle each row here...
                     # if not row ==1:
                     mobile = row[2]
-                    BulkMessagesSendingview(mobile,responsedata['body'])
-                    # csv1 = pd.read_csv(url)
-            # print(csv1.rows)
-            # response = urlopen(url)
-            # cr = csv.reader(csv1)
-            #
-            # for row in cr:
-            #     print(row)
-
-            # reader=csv.reader(open(url,'r'),delimiter=',')
-            # for i,item in enumerate(reader,start=1):
-            #     if not i == 1:
-            #         print(item[2])
-
-            # reader = csv.reader(open(url, 'rb'), delimiter=',')
-            # fields = reader.next()
-            # for item in reader:
-            #     items = zip(fields, item)
-            #     items_dict = {}
-            #     items_dict = dict(items)
-            #     mob = items_dict['mobile_number']
-            #     print(mob)
-
+                    BulkMessagesSendingview(mobile, responsedata['body'])
             return Response(responsedata, status=status.HTTP_200_OK)
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -98,7 +81,9 @@ class SingleMessageView(APIView):
         message_serializer = MessageSerializer(data=request.data)
         if message_serializer.is_valid():
             message_serializer.save()
-            my_django_view(message_serializer)
+            phone = request.data['phone']
+            body = request.data['body']
+            SingleMessageSendingView(phone, body)
             return Response(message_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(message_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

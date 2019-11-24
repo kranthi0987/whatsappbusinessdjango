@@ -21,16 +21,16 @@ export default {
             url: '/base',
             icon: 'icon-star',
             children: [
-                {
-                    name: 'Cards',
-                    url: '/base/cards',
-                    icon: 'icon-puzzle',
-                },
-                {
-                    name: 'Forms',
-                    url: '/base/forms',
-                    icon: 'icon-puzzle',
-                },
+                // {
+                //     name: 'Cards',
+                //     url: '/base/cards',
+                //     icon: 'icon-puzzle',
+                // },
+                // {
+                //     name: 'Forms',
+                //     url: '/base/forms',
+                //     icon: 'icon-puzzle',
+                // },
                 {
                     name: 'Message',
                     url: '/base/messages',

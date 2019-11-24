@@ -15,7 +15,8 @@ class MediaMessageModel(models.Model):
     filename = models.TextField()
     phone = models.TextField()
     body = models.TextField()
-    csv_file = models.FileField(blank=False, null=False)
+    caption = models.TextField()
+    vcardfile = models.FileField(blank=False, null=False)
     message_date_time = models.DateTimeField(default=timezone.now)
 
 

@@ -89,7 +89,7 @@ class BulkMessages extends Component {
             formData.append('vcardfile', file.files[0]);
         }
         formData.append('from_who', '9989015918');
-        formData.append('phone', to_who);
+        formData.append('phone', '91'+to_who);
         formData.append('body', message);
         formData.append('sent_status', 'true');
         // formData.append('vcardfile',inputFiles);
@@ -182,7 +182,7 @@ class BulkMessages extends Component {
                                             <Label htmlFor="file-input">Vcard </Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="file" id="file-input"
+                                            <Input type="file" id="file-input" accept=".csv"
                                                    name="vcardfile"/>
                                         </Col>
                                         <a href='http://localhost:8000/media/samplecsv/excel.csv' download>Click to download samplecsv</a>

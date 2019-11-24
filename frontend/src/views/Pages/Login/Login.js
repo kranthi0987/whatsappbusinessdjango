@@ -66,23 +66,24 @@ class Login extends Component {
             })
         }).then(response => {
             if (response.status === 200) {
-                console.log(response);
                 toaster.notify("Sucessfull logged in", {
                     duration: 2000, type: "success"
                 });
                 this.props.history.push('/dashboard')
                 return response.json()
-            } else {
+            } else if (response.status === 400) {
                 toaster.notify("failed login", {
                     duration: 2000, type: "error"
                 });
-                console.log("oh no!", response.status === 404)
+            } else {
+                toaster.notify("server error", {
+                    duration: 2000, type: "error"
+                });
             }
         }).then(function (data) {
-            localStorage.setItem("token", data.token);
-            // toaster.notify("Hello world", {
-            //     duration: 2000
-            // });
+            if (data != null) {
+                localStorage.setItem("token", data.token);
+            }
             console.log('request succeeded with JSON response', data)
         })
     }
@@ -131,9 +132,9 @@ class Login extends Component {
                                                     <Button color="primary" className="px-4"
                                                             onClick={this.handleSubmit}>Login</Button>
                                                 </Col>
-                                                <Col xs="6" className="text-right">
-                                                    <Button color="link" className="px-0">Forgot password?</Button>
-                                                </Col>
+                                                {/*<Col xs="6" className="text-right">*/}
+                                                {/*    <Button color="link" className="px-0">Forgot password?</Button>*/}
+                                                {/*</Col>*/}
                                             </Row>
                                         </Form>
                                     </CardBody>
