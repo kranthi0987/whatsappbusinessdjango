@@ -1,5 +1,7 @@
 import csv
+import json
 
+import requests
 from django.shortcuts import render
 
 # Create your views here.
@@ -9,7 +11,24 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from mediamanagement.serializer import MediaSerializer, MediaFileSerializer
-from whatsappbusiness.settings import Chat_api_sending_message, Chat_api_token, Chat_api_message
+from whatsappbusiness.settings import Chat_api_sending_message, Chat_api_token, Chat_api_message, Chat_api_media
+
+
+def MediaMessageSendingView(mobilenumber, message, filename, caption):
+    global r
+    # sending_message_serializer = SendingMessageSerializer(data=message_serializer.data)
+    # if sending_message_serializer.is_valid():
+
+    json_data = {'phone': mobilenumber, 'body': message, 'filename': filename, 'caption': caption}
+    print(json.dumps(json_data))
+    r = requests.post(Chat_api_sending_message + Chat_api_media + Chat_api_token,
+                      data=json.dumps(json_data))
+    if r.status_code == 200:
+        print(r)
+        return Response(r, status=status.HTTP_200_OK)
+    else:
+        return Response(r, status=status.HTTP_400_BAD_REQUEST)
+
 
 class MediaManageFileUploadView(APIView):
     parser_class = (FileUploadParser,)
@@ -76,7 +95,7 @@ class MultimediaMessagesView(APIView):
     parser_class = (FileUploadParser,)
 
     def post(self, request, *args, **kwargs):
-        file_serializer = MediaFileSerializer(data=request.data)
+        file_serializer = MediaSerializer(data=request.data)
         if file_serializer.is_valid():
             file_serializer.save()
             responsedata = file_serializer.data

@@ -89,7 +89,7 @@ class BulkMessages extends Component {
             formData.append('vcardfile', file.files[0]);
         }
         formData.append('from_who', '9989015918');
-        formData.append('phone', from_who);
+        formData.append('phone', to_who);
         formData.append('body', message);
         formData.append('sent_status', 'true');
         // formData.append('vcardfile',inputFiles);
@@ -105,11 +105,10 @@ class BulkMessages extends Component {
                     duration: 2000, type: "success"
                 });
                 this.clearForm();
-                this.setState({buttonState: 'success'})
+
                 return response.json()
             } else {
                 console.log("oh no!", response.status === 404)
-                  this.setState({buttonState: 'error'})
             }
         }).then(function (data) {
             console.log('request succeeded with JSON response', data)
@@ -186,7 +185,7 @@ class BulkMessages extends Component {
                                             <Input type="file" id="file-input"
                                                    name="vcardfile"/>
                                         </Col>
-                                        <a href='http://localhost:8000/media/samplcsv/excel.csv' download>Click to download samplecsv</a>
+                                        <a href='http://localhost:8000/media/samplecsv/excel.csv' download>Click to download samplecsv</a>
                                     </FormGroup>
                                 </Form>
                             </CardBody>

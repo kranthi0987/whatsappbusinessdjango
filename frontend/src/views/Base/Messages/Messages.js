@@ -94,7 +94,7 @@ class Messages extends Component {
 
         let formData = new FormData();
         formData.append('from_who', '9989015918');
-        formData.append('phone', from_who);
+        formData.append('phone', '91'+to_who);
         formData.append('body', message);
         formData.append('sent_status', 'true');
 

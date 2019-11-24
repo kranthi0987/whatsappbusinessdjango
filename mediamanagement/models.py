@@ -1,15 +1,22 @@
 import uuid as uuid
+
+from django.core.files.storage import FileSystemStorage
 from django.db import models
 
 
 # Create your models here.
+from django.utils import timezone
 
-class MediaManageModel(models.Model):
+fs = FileSystemStorage(location='/media/storage')
+
+class MediaMessageModel(models.Model):
     uuid = models.TextField(default=uuid.uuid1())
-    messageuuid = models.TextField(default='')
     content_type = models.TextField()
+    filename = models.TextField()
+    phone = models.TextField()
     body = models.TextField()
-    file = models.FileField(blank=False, null=False)
+    csv_file = models.FileField(blank=False, null=False)
+    message_date_time = models.DateTimeField(default=timezone.now)
 
 
 class MediaFileModel(models.Model):

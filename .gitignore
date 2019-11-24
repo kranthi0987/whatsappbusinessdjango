@@ -1,4 +1,10 @@
 media/
 frontend/node_modules
+
+### OSX ###
 .DS_Store
+
 .idea
+__pycache__/
+*.pot
+*.pyc
