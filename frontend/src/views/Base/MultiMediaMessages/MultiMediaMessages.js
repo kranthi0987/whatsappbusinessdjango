@@ -174,7 +174,7 @@ const inputFiles = document.querySelectorAll('input[type="file"]');
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="file" id="file-input" accept=".csv" name="vcardfile"/>
-                                            <a href={BASEURL+'/media/samplecsv/excel.csv'} download>Click to
+                                            <a href={BASEURL+'media/samplecsv/excel.csv'} download>Click to
                                                 download samplecsv</a>
                                         </Col>
                                     </FormGroup>
