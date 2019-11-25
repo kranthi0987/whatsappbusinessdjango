@@ -79,7 +79,7 @@ class MultiMediaMessages extends Component {
         if (this.state.submitted) {
             let arraydata = this.state.tmpArray
             for (var i = 0; i <= arraydata.length; i++) {
-                var json_oject =JSON.parse(arraydata[i])
+                var json_oject = JSON.parse(arraydata[i])
                 this.Apicalling(json_oject);
             }
         }
@@ -89,7 +89,7 @@ class MultiMediaMessages extends Component {
         const {to_who, message} = this.state;
 
         let url = BASEURL+'mediaupload/multimediamessages/';
-const inputFiles = document.querySelectorAll('input[type="file"]');
+        const inputFiles = document.querySelectorAll('input[type="file"]');
 
         console.log(json_oject)
         let formData = new FormData();

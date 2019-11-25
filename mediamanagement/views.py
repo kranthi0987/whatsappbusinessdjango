@@ -106,7 +106,7 @@ def BulkMediaMessagesSendingview(phone, fileurl, filename, caption):
     if r.status_code == 200:
         print(r)
         return Response(r, status=status.HTTP_200_OK)
-    elif r.status_code ==500:
+    elif r.status_code == 500:
         return Response(r,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     else:
         return Response(r, status=status.HTTP_400_BAD_REQUEST)
@@ -122,7 +122,7 @@ class MultimediaMessagesView(APIView):
             responsedata = file_serializer.data
             csvfile = responsedata['vcardfile']
             # url = '/Volumes/work/whatsapp/whatsappbusinessdjango/media/excel.csv'
-            url = SERVER_URL + csvfile
+            url = SERVER_URL + csvfile.strip("/")
 
             with closing(requests.get(url, stream=True)) as r:
                 reader = csv.reader(codecs.iterdecode(r.iter_lines(), 'utf-8'), delimiter=',')

@@ -61,7 +61,7 @@ class BulkMessageProcessView(APIView):
             responsedata = file_serializer.data
             csvfile = responsedata['vcardfile']
             # url = '/Volumes/work/whatsapp/whatsappbusinessdjango/media/excel.csv'
-            url = SERVER_URL + csvfile
+            url = SERVER_URL + csvfile.strip("/")
 
             with closing(requests.get(url, stream=True)) as r:
                 reader = csv.reader(codecs.iterdecode(r.iter_lines(), 'utf-8'), delimiter=',')
