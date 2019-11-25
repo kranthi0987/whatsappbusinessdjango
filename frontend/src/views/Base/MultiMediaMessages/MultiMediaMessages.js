@@ -27,6 +27,7 @@ import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css";
 import {setOptions} from "filepond";
 import {BASEURL} from '../../../Constants'
+
 registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
 
 class MultiMediaMessages extends Component {
@@ -88,7 +89,7 @@ class MultiMediaMessages extends Component {
     Apicalling(json_oject) {
         const {to_who, message} = this.state;
 
-        let url = BASEURL+'mediaupload/multimediamessages/';
+        let url = BASEURL + 'mediaupload/multimediamessages/';
         const inputFiles = document.querySelectorAll('input[type="file"]');
 
         console.log(json_oject)
@@ -96,13 +97,15 @@ class MultiMediaMessages extends Component {
         for (const file of inputFiles) {
             formData.append('vcardfile', file.files[0]);
         }
+
+        var body_url = json_oject.filepond.substr(json_oject.filepond.indexOf('/') + 1);
         formData.append('from_who', '9989015918');
         formData.append('phone', '91' + to_who);
-        formData.append('body', BASEURL+json_oject.filepond);
+        formData.append('body', BASEURL + body_url);
         // formData.append('body', 'https://i.ibb.co/5vv5V8s/asunabg.png');
         formData.append('filename', json_oject.filepond.split('/').pop());
         formData.append('caption', message);
-        formData.append('content_type','image');
+        formData.append('content_type', 'image');
         formData.append('sent_status', 'true');
 
         fetch(url, {
@@ -174,7 +177,7 @@ class MultiMediaMessages extends Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="file" id="file-input" accept=".csv" name="vcardfile"/>
-                                            <a href={BASEURL+'media/samplecsv/excel.csv'} download>Click to
+                                            <a href={BASEURL + 'media/samplecsv/excel.csv'} download>Click to
                                                 download samplecsv</a>
                                         </Col>
                                     </FormGroup>
