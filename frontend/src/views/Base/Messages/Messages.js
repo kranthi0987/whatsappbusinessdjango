@@ -37,6 +37,7 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css";
+import {BASEURL} from "../../../Constants";
 
 registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
 
@@ -77,7 +78,7 @@ class Messages extends Component {
 
         this.setState({loading: true});
 
-        let url = 'http://127.0.0.1:8000/message/singlemessage/';
+        let url = {BASEURL}+'message/singlemessage/';
 
 
         let formData = new FormData();

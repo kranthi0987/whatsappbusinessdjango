@@ -12,6 +12,7 @@ import {
     Table
 } from 'reactstrap';
 import axios from 'axios';
+import {BASEURL} from "../../../Constants";
 // function getvals(){
 //     return fetch('http://localhost:8000/message/listallmessages/',
 //     {
@@ -40,7 +41,7 @@ class Tables extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8000/message/listallmessages/', {
+        axios.get({BASEURL}+'message/listallmessages/', {
             responseType: 'json'
         }).then(response => {
             this.state.tableData = response.data;

@@ -13,7 +13,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from mediamanagement.serializer import MediaSerializer, MediaFileSerializer
-from whatsappbusiness.settings import Chat_api_sending_message, Chat_api_token, Chat_api_message, Chat_api_media
+from whatsappbusiness.settings import Chat_api_sending_message, Chat_api_token, Chat_api_message, Chat_api_media, \
+    SERVER_URL
 
 
 def MediaMessageSendingView(mobilenumber, message, filename, caption):
@@ -121,7 +122,7 @@ class MultimediaMessagesView(APIView):
             responsedata = file_serializer.data
             csvfile = responsedata['vcardfile']
             # url = '/Volumes/work/whatsapp/whatsappbusinessdjango/media/excel.csv'
-            url = 'http://localhost:8000' + csvfile
+            url = SERVER_URL + csvfile
 
             with closing(requests.get(url, stream=True)) as r:
                 reader = csv.reader(codecs.iterdecode(r.iter_lines(), 'utf-8'), delimiter=',')

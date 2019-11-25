@@ -28,6 +28,7 @@ import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css";
 import ProgressButton from 'react-progress-button'
 import {BASEURL} from '../../../Constants'
+
 class BulkMessages extends Component {
     constructor(props) {
         super(props);
@@ -79,7 +80,7 @@ class BulkMessages extends Component {
 
         this.setState({loading: true});
 
-        let url = BASEURL+'message/bulkmessages/';
+        let url = BASEURL + 'message/bulkmessages/';
 
         const inputFiles = document.querySelectorAll('input[type="file"]');
 
@@ -89,7 +90,7 @@ class BulkMessages extends Component {
             formData.append('vcardfile', file.files[0]);
         }
         formData.append('from_who', '9989015918');
-        formData.append('phone', '91'+to_who);
+        formData.append('phone', '91' + to_who);
         formData.append('body', message);
         formData.append('sent_status', 'true');
         // formData.append('vcardfile',inputFiles);
@@ -185,7 +186,8 @@ class BulkMessages extends Component {
                                             <Input type="file" id="file-input" accept=".csv"
                                                    name="vcardfile"/>
                                         </Col>
-                                        <a href='http://localhost:8000/media/samplecsv/excel.csv' download>Click to download samplecsv</a>
+                                        <a href={BASEURL + 'media/samplecsv/excel.csv'} download>Click to download
+                                            samplecsv</a>
                                     </FormGroup>
                                 </Form>
                             </CardBody>
