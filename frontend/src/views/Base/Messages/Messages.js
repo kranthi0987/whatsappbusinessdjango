@@ -78,7 +78,7 @@ class Messages extends Component {
 
         this.setState({loading: true});
 
-        let url = {BASEURL}+'message/singlemessage/';
+        let url = BASEURL+'message/singlemessage/';
 
 
         let formData = new FormData();
