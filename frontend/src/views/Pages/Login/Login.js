@@ -53,7 +53,7 @@ class Login extends Component {
 
         this.setState({loading: true});
 
-        let url = {BASEURL}+'api/auth/login';
+        let url = BASEURL+'api/auth/login';
 
         fetch(url, {
             method: "POST",

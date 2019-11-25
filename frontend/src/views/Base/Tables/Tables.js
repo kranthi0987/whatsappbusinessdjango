@@ -41,7 +41,7 @@ class Tables extends Component {
     }
 
     componentDidMount() {
-        axios.get({BASEURL}+'message/listallmessages/', {
+        axios.get(BASEURL+'message/listallmessages/', {
             responseType: 'json'
         }).then(response => {
             this.state.tableData = response.data;
