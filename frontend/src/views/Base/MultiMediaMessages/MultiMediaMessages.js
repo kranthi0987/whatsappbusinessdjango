@@ -26,7 +26,7 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css";
 import {setOptions} from "filepond";
-
+import {BASEURL} from '../../../Constants'
 registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
 
 class MultiMediaMessages extends Component {
@@ -47,10 +47,10 @@ class MultiMediaMessages extends Component {
         this.clearForm = this.clearForm.bind(this);
         setOptions({
             server: {
-                url: 'http://localhost:8000',
+                url: BASEURL,
                 timeout: 7000,
                 process: {
-                    url: '/mediaupload/fileupload/',
+                    url: 'mediaupload/fileupload/',
                     method: 'POST',
                     headers: {},
                     withCredentials: false,
@@ -88,7 +88,7 @@ class MultiMediaMessages extends Component {
     Apicalling(json_oject) {
         const {to_who, message} = this.state;
 
-        let url = 'http://127.0.0.1:8000/mediaupload/multimediamessages/';
+        let url = BASEURL+'mediaupload/multimediamessages/';
 const inputFiles = document.querySelectorAll('input[type="file"]');
 
         console.log(json_oject)
@@ -98,8 +98,8 @@ const inputFiles = document.querySelectorAll('input[type="file"]');
         }
         formData.append('from_who', '9989015918');
         formData.append('phone', '91' + to_who);
-        // formData.append('body', 'http://127.0.0.1:8000'+json_oject.filepond);
-        formData.append('body', 'https://i.ibb.co/5vv5V8s/asunabg.png');
+        formData.append('body', BASEURL+json_oject.filepond);
+        // formData.append('body', 'https://i.ibb.co/5vv5V8s/asunabg.png');
         formData.append('filename', json_oject.filepond.split('/').pop());
         formData.append('caption', message);
         formData.append('content_type','image');
@@ -174,7 +174,7 @@ const inputFiles = document.querySelectorAll('input[type="file"]');
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="file" id="file-input" accept=".csv" name="vcardfile"/>
-                                            <a href='http://localhost:8000/media/samplecsv/excel.csv' download>Click to
+                                            <a href={BASEURL+'/media/samplecsv/excel.csv'} download>Click to
                                                 download samplecsv</a>
                                         </Col>
                                     </FormGroup>
