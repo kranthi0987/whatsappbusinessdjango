@@ -16,6 +16,7 @@ import {
     InputGroupText,
     Row
 } from 'reactstrap';
+import {BASEURL} from "../../../Constants";
 
 class Login extends Component {
     constructor() {
@@ -52,7 +53,7 @@ class Login extends Component {
 
         this.setState({loading: true});
 
-        let url = 'http://127.0.0.1:8000/api/auth/login';
+        let url = {BASEURL}+'api/auth/login';
 
         fetch(url, {
             method: "POST",

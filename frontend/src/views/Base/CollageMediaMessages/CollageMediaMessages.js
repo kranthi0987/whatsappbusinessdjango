@@ -37,6 +37,7 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css";
+import {BASEURL} from "../../../Constants";
 
 registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
 
@@ -184,7 +185,7 @@ class CollageMediaMessages extends Component {
                                             {/*<Input type="file" id="file-multiple-input" name="file-multiple-input"*/}
                                             {/*       multiple/>*/}
                                             <FilePond allowMultiple={true} maxFiles={5}
-                                                      server='http://localhost:8000/mediaupload/fileupload/'/>
+                                                      server={BASEURL + 'mediaupload/fileupload/'}/>
                                         </Col>
                                     </FormGroup>
                                 </Form>
@@ -199,7 +200,8 @@ class CollageMediaMessages extends Component {
                     </Col>
                 </Row>
             </div>
-        );
+        )
+            ;
     }
 }
 

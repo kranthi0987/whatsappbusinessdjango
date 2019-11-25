@@ -14,7 +14,7 @@ import codecs
 import json
 from messageprocess.models import MessageProcessModel
 from messageprocess.serializer import MessageSerializer, SendingMessageSerializer, BulkMessageSerializer
-from whatsappbusiness.settings import Chat_api_sending_message, Chat_api_token, Chat_api_message
+from whatsappbusiness.settings import Chat_api_sending_message, Chat_api_token, Chat_api_message, SERVER_URL
 
 
 def SingleMessageSendingView(phone, body):
@@ -61,7 +61,7 @@ class BulkMessageProcessView(APIView):
             responsedata = file_serializer.data
             csvfile = responsedata['vcardfile']
             # url = '/Volumes/work/whatsapp/whatsappbusinessdjango/media/excel.csv'
-            url = 'http://localhost:8000' + csvfile
+            url = SERVER_URL + csvfile
 
             with closing(requests.get(url, stream=True)) as r:
                 reader = csv.reader(codecs.iterdecode(r.iter_lines(), 'utf-8'), delimiter=',')
