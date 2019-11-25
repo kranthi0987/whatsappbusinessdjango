@@ -97,8 +97,10 @@ class MultiMediaMessages extends Component {
         for (const file of inputFiles) {
             formData.append('vcardfile', file.files[0]);
         }
-
-        var body_url = json_oject.filepond.substr(json_oject.filepond.indexOf('/') + 1);
+        var fileName = json_oject.filepond;
+        console.log(fileName);
+        var body_url = fileName.substr(fileName.indexOf('/') + 1);
+        console.log(body_url);
         formData.append('from_who', '9989015918');
         formData.append('phone', '91' + to_who);
         formData.append('body', BASEURL + body_url);
