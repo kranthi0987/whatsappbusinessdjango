@@ -27,7 +27,7 @@ import {
 import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css";
 import ProgressButton from 'react-progress-button'
-
+import {BASEURL} from '../../../Constants'
 class BulkMessages extends Component {
     constructor(props) {
         super(props);
@@ -79,7 +79,7 @@ class BulkMessages extends Component {
 
         this.setState({loading: true});
 
-        let url = 'http://127.0.0.1:8000/message/bulkmessages/';
+        let url = BASEURL+'message/bulkmessages/';
 
         const inputFiles = document.querySelectorAll('input[type="file"]');
 
