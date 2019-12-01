@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'uploadmedia',
     'corsheaders',
     'messageprocess',
-    'mediamanagement'
+    'mediamanagement',
+    'phonenumber_field'
 ]
 
 MIDDLEWARE = [
@@ -144,7 +145,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
-settings.AUTH_USER_MODEL = 'accountapi.User'
 
 Chat_api_token = '?token=fu23isfvctr05ps1'
 Chat_api_message = 'sendMessage'

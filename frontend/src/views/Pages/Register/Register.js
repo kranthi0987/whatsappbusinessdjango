@@ -14,6 +14,8 @@ import {
     Row
 } from 'reactstrap';
 import {BASEURL} from "../../../Constants";
+import toaster from "toasted-notes";
+import "toasted-notes/src/styles.css";
 
 class Register extends Component {
     constructor() {
@@ -41,7 +43,7 @@ class Register extends Component {
     handleSubmit(e) {
         e.preventDefault();
         this.setState({submitted: true});
-        const {password, repeated_password, username, email,mobilenumber} = this.state;
+        const {password, repeated_password, username, email, mobilenumber} = this.state;
         // perform all neccassary validations
         if (password !== repeated_password) {
             alert("Passwords don't match");
@@ -49,7 +51,7 @@ class Register extends Component {
             // make API call
             console.log(username, password, email,);
             this.setState({loading: true});
-            let url = BASEURL+'api/auth/register';
+            let url = BASEURL + 'api/auth/register';
             fetch(url, {
                 method: "POST",
                 headers: ({
@@ -59,15 +61,25 @@ class Register extends Component {
                 body: JSON.stringify({
                     email: email,
                     username: username,
-                    password: password
+                    password: password,
+                    phone: mobilenumber
                 })
             }).then(response => {
-                if (response.status === 201) {
+                if (response.status === 200) {
                     console.log(response);
+                    toaster.notify("Sucessfull registered", {
+                        duration: 2000, type: "success"
+                    });
                     this.props.history.push('/login');
                     return response.json()
+                } else if (response.status === 400) {
+                    toaster.notify("failed login", {
+                        duration: 2000, type: "error"
+                    });
                 } else {
-                    console.log("oh no!", response.status === 404)
+                    toaster.notify("server error", {
+                        duration: 2000, type: "error"
+                    });
                 }
             }).then(function (data) {
                 console.log('request succeeded with JSON response', data)
@@ -78,7 +90,7 @@ class Register extends Component {
     }
 
     render() {
-        const {username, password, email, repeated_password, submitted, mobilenumber,loading, error} = this.state;
+        const {username, password, email, repeated_password, submitted, mobilenumber, loading, error} = this.state;
         return (
             <div className="app flex-row align-items-center">
                 <Container>
@@ -113,11 +125,11 @@ class Register extends Component {
                                             <div className="help-block">email is required</div>
                                             }
                                         </InputGroup>
-                                             <InputGroup className="mb-3">
+                                        <InputGroup className="mb-3">
                                             <InputGroupAddon addonType="prepend">
                                                 <InputGroupText>+91</InputGroupText>
                                             </InputGroupAddon>
-                                            <Input type="number" placeholder="mobilenumber"  name="mobilenumber"
+                                            <Input type="number" placeholder="mobilenumber" name="mobilenumber"
                                                    value={mobilenumber}
                                                    onChange={this.handleChange}/>
                                             {submitted && !mobilenumber &&
