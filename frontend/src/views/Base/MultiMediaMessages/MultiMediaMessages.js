@@ -170,7 +170,7 @@ class MultiMediaMessages extends Component {
                                             <Label>From </Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <p className="form-control-static"><strong>localStorage.getItem('phone')</strong></p>
+                                            <p className="form-control-static"><strong>{localStorage.getItem('phone')}</strong></p>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
