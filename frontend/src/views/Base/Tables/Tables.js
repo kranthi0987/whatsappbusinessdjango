@@ -117,7 +117,7 @@ class Tables extends Component {
                         if {message.sent_status}{
                         <Badge color="success">Active</Badge>
                     }else{
-                        <Badge color="warning">Failed</Badge>
+                        <Badge color="danger">Failed</Badge>
                     }
                     </td>
                 </tr>
