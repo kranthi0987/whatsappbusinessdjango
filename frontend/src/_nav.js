@@ -46,15 +46,15 @@ export default {
                     url: '/base/multimediamessages',
                     icon: 'icon-puzzle',
                 },
-                {
-                    name: 'Collage Message',
-                    url: '/base/collagemediamessages',
-                    icon: 'icon-puzzle',
-                },
+                // {
+                //     name: 'Collage Message',
+                //     url: '/base/collagemediamessages',
+                //     icon: 'icon-puzzle',
+                // },
                 {
                     name: 'List Messages',
                     url: '/base/tables',
-                    icon: 'icon-table',
+                    icon: 'icon-puzzle',
                 },
             ],
         },

@@ -12,6 +12,7 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from mediamanagement.models import MediaMessageModel
 from mediamanagement.serializer import MediaSerializer, MediaFileSerializer
 from whatsappbusiness.settings import Chat_api_sending_message, Chat_api_token, Chat_api_message, Chat_api_media, \
     SERVER_URL
@@ -167,3 +168,10 @@ class CollageMediaMessagesView(APIView):
             return Response(responsedata, status=status.HTTP_201_CREATED)
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class MultiMediaMessagesCount(APIView):
+    def get(self,request):
+        Message_me = MediaMessageModel.objects.count()
+        return Response({"messagecount": Message_me}, status=status.HTTP_200_OK)

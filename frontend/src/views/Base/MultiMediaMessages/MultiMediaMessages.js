@@ -34,7 +34,7 @@ class MultiMediaMessages extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            from_who: '9989015918',
+            from_who: localStorage.getItem('phone'),
             to_who: '',
             message_status: '',
             message: '',
@@ -101,7 +101,7 @@ class MultiMediaMessages extends Component {
         console.log(fileName);
         var body_url = fileName.substr(fileName.indexOf('/') + 1);
         console.log(body_url);
-        formData.append('from_who', '9989015918');
+        formData.append('from_who', localStorage.getItem('phone'));
         formData.append('phone', '91' + to_who);
         formData.append('body', BASEURL + body_url);
         // formData.append('body', 'https://i.ibb.co/5vv5V8s/asunabg.png');
@@ -170,7 +170,7 @@ class MultiMediaMessages extends Component {
                                             <Label>From </Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <p className="form-control-static"><strong>+91-9989015918</strong></p>
+                                            <p className="form-control-static"><strong>localStorage.getItem('phone')</strong></p>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
