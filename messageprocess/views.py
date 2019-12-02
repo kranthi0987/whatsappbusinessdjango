@@ -92,3 +92,9 @@ class SingleMessageView(APIView):
 class ListMessagesView(generics.ListCreateAPIView):
     queryset = MessageProcessModel.objects.all()
     serializer_class = MessageSerializer
+
+
+class TextMessagesCount(APIView):
+    def get(self,request):
+        Message_me = MessageProcessModel.objects.count()
+        return Response({"messagecount": Message_me}, status=status.HTTP_200_OK)

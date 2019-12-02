@@ -31,6 +31,7 @@ class Login extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.userprofilesavingtolocalstorage = this.userprofilesavingtolocalstorage.bind(this);
     }
 
 
@@ -41,7 +42,7 @@ class Login extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
+        let currentComponent = this;
         this.setState({submitted: true});
         const {username, password, returnUrl} = this.state;
 
@@ -53,7 +54,7 @@ class Login extends Component {
 
         this.setState({loading: true});
 
-        let url = BASEURL+'api/auth/login';
+        let url = BASEURL + 'api/auth/login';
 
         fetch(url, {
             method: "POST",
@@ -84,11 +85,54 @@ class Login extends Component {
         }).then(function (data) {
             if (data != null) {
                 localStorage.setItem("token", data.token);
+                currentComponent.userprofilesavingtolocalstorage(data.token);
             }
             console.log('request succeeded with JSON response', data)
         })
     }
 
+    userprofilesavingtolocalstorage(token) {
+        let currentComponent = this;
+        console.log(token);
+        let url = BASEURL + 'api/auth/userdetails';
+        fetch(url, {
+            method: "GET",
+            headers: ({
+                "Accept": "application/json",
+                "Authorization": 'Token ' + token,
+                "Content-Type": "application/json"
+            })
+        }).then(response => {
+            if (response.status === 200) {
+                // toaster.notify("Sucessfull logged in", {
+                //     duration: 2000, type: "success"
+                // });
+                return response.json()
+            } else if (response.status === 400) {
+                // toaster.notify("failed login", {
+                //     duration: 2000, type: "error"
+                // });
+            } else {
+                toaster.notify("server error", {
+                    duration: 2000, type: "error"
+                });
+            }
+        }).then(function (data) {
+            // if (data != null) {
+            //     localStorage.setItem("token", data.token);
+            // }
+            if (data != null) {
+                localStorage.setItem("id", data.id);
+                localStorage.setItem("fullname", data.fullname);
+                localStorage.setItem("username", data.username);
+                localStorage.setItem("email", data.email);
+                localStorage.setItem("phone", data.phone);
+                localStorage.setItem("lastlogin", data.lastlogin);
+            }
+
+            console.log('request succeeded with JSON response', data)
+        })
+    }
 
     render() {
         const {username, password, submitted, loading, error} = this.state;

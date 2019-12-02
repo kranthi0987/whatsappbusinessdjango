@@ -48,10 +48,10 @@ class Messages extends Component {
         this.state = {
             collapse: true,
             fadeIn: true,
-            timeout: 300
+            timeout: 30
         };
         this.state = {
-            from_who: '9989015918',
+            from_who: localStorage.getItem('phone'),
             to_who: '',
             message_status: '',
             message: '',
@@ -82,7 +82,7 @@ class Messages extends Component {
 
 
         let formData = new FormData();
-        formData.append('from_who', '9989015918');
+        formData.append('from_who', localStorage.getItem('phone'));
         formData.append('phone', '91'+to_who);
         formData.append('body', message);
         formData.append('sent_status', 'true');
@@ -136,7 +136,7 @@ class Messages extends Component {
                                             <Label>From </Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <p className="form-control-static"><strong>+91-9989015918</strong></p>
+                                            <p className="form-control-static"><strong>{localStorage.getItem('phone')}</strong></p>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>

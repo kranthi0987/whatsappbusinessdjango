@@ -9,7 +9,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import *
 from accountapi.Serializer import UserSerializer, UserProfileSerializer, TokenSerializer
-
+import time
+from datetime import datetime
 
 # class UserCreate(generics.CreateAPIView):
 #     """
@@ -85,3 +86,10 @@ class Logout(APIView):
         # simply delete the token to force a login
         request.user.auth_token.delete()
         return Response({"message": "logged out", "status": "true"}, status=status.HTTP_200_OK)
+
+
+class GetSystemRunningTime(APIView):
+    def get(self, request):
+        start_time = datetime.now()
+        end_time = datetime.now()
+        return Response({"systemtime": end_time - start_time}, status=status.HTTP_200_OK)
