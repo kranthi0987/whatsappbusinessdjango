@@ -145,8 +145,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
-Chat_api_token = '?token=488zkk1mv186nl9m'
+Chat_api_token = '?token=13l84o9ml4q0xxq4'
 Chat_api_message = 'sendMessage'
-Chat_api_sending_message = 'https://eu69.chat-api.com/instance83787/'
+Chat_api_sending_message = 'https://eu37.chat-api.com/instance88562/'
 Chat_api_media = 'sendFile'
 SERVER_URL = 'http://3.86.207.197:8000/'
