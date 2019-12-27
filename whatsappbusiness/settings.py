@@ -81,21 +81,30 @@ WSGI_APPLICATION = 'whatsappbusiness.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'NAME': 'whatsappbussiness',
+#         'ENGINE': 'mysql.connector.django',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         # 'PASSWORD': '1qaz2wsx',
+#         # 'HOST': '13.232.42.167',
+#         # 'PORT': '3306',
+#         'OPTIONS': {
+#             'autocommit': True,
+#         },
+#     }
+# }
 DATABASES = {
-    'default': {
-        'NAME': 'whatsappbussiness',
-        'ENGINE': 'mysql.connector.django',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        # 'PASSWORD': '1qaz2wsx',
-        # 'HOST': '13.232.42.167',
-        # 'PORT': '3306',
-        'OPTIONS': {
-            'autocommit': True,
-        },
-    }
+	'default': {
+	'ENGINE': 'django.db.backends.mysql',
+	'NAME': 'whatsappbussiness',
+	'USER': 'root',
+	'PASSWORD': "root",
+	'HOST': "localhost",
+	'PORT': "",
+	}
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
