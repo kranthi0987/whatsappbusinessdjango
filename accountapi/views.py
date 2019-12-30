@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate
-from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 from rest_framework import generics, status, permissions
 from rest_framework.authentication import TokenAuthentication
@@ -30,7 +29,6 @@ class UserCreate(APIView):
         else:
             return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-@csrf_exempt
 class LoginView(APIView):
     def post(self, request):
         username = request.data.get("username", )
