@@ -156,8 +156,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
-Chat_api_token = '?token=vynzouf3nhcgltax'
+Chat_api_token = '?token=13l84o9ml4q0xxq4'
 Chat_api_message = 'sendMessage'
-Chat_api_sending_message = 'https://eu2.chat-api.com/instance89149/'
+Chat_api_sending_message = 'https://eu37.chat-api.com/instance88562/'
 Chat_api_media = 'sendFile'
-SERVER_URL = 'https//icon-rim.com:8000/'
+SERVER_URL = 'https://icon-rim.com:8000/'
