@@ -5,6 +5,9 @@ import pandas as pd
 import requests
 import urllib
 from urllib.request import urlopen
+
+from django.core import serializers
+from django.http import QueryDict, JsonResponse
 from rest_framework import status, generics
 from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
@@ -12,8 +15,9 @@ from rest_framework.views import APIView
 from contextlib import closing
 import codecs
 import json
-from messageprocess.models import MessageProcessModel
-from messageprocess.serializer import MessageSerializer, SendingMessageSerializer, BulkMessageSerializer
+from messageprocess.models import MessageProcessModel, MessageCounter, MessageListModel
+from messageprocess.serializer import MessageSerializer, SendingMessageSerializer, BulkMessageSerializer, \
+    MessageListSerializer
 from whatsappbusiness.settings import Chat_api_sending_message, Chat_api_token, Chat_api_message, SERVER_URL
 
 
@@ -24,6 +28,16 @@ def SingleMessageSendingView(phone, body):
     json_data = {'phone': phone, 'body': body}
     # print(json.dumps(json_data))
     # formdata = json.dumps(json_data)
+    listtt = dict({'from_whom': dddd["to_who"], 'to_whom': phone,
+                   'body': body, 'message_type': 'Text',
+                   'file_url': '', 'content_type': '',
+                   'sent_status': True})
+    query_dict = QueryDict('', mutable=True)
+    query_dict.update(listtt)
+    message_list_serializer = MessageListSerializer(data=query_dict)
+    if (message_list_serializer.is_valid()):
+        message_list_serializer.save()
+
     r = requests.post(Chat_api_sending_message + Chat_api_message + Chat_api_token,
                       json=json_data)
     if r.status_code == 200:
@@ -63,7 +77,7 @@ class BulkMessageProcessView(APIView):
             # url = '/Volumes/work/whatsapp/whatsappbusinessdjango/media/excel.csv'
             url = SERVER_URL + csvfile.strip("/")
             print(url)
-            with closing(requests.get(url, stream=True,verify=False)) as r:
+            with closing(requests.get(url, stream=True, verify=False)) as r:
                 reader = csv.reader(codecs.iterdecode(r.iter_lines(), 'utf-8'), delimiter=',')
                 for row in reader:
                     # Handle each row here...
@@ -78,23 +92,44 @@ class BulkMessageProcessView(APIView):
 class SingleMessageView(APIView):
 
     def post(self, request, *args, **kwargs):
+        dddd = request.data
+        listtt = dict({'from_whom': dddd["to_who"], 'to_whom': 'dsdsda',
+                       'body': 'dddd', 'message_type': 'gggg',
+                       'file_url': 'gggg', 'content_type': 'ggg',
+                       'sent_status': True})
+        query_dict = QueryDict('', mutable=True)
+        query_dict.update(listtt)
+        message_list_serializer = MessageListSerializer(data=query_dict)
+        if (message_list_serializer.is_valid()):
+            message_list_serializer.save()
+
         message_serializer = MessageSerializer(data=request.data)
         if message_serializer.is_valid():
             message_serializer.save()
             phone = request.data['phone']
             body = request.data['body']
-            SingleMessageSendingView(phone, body)
+            # SingleMessageSendingView(phone, body)
             return Response(message_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(message_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# class ListMessagesView(APIView):
+#     def get(self, request):
+#         queryset = MessageListModel.objects.all()
+#         # SomeModel_json = serializers.serialize("json", queryset)
+#         serialized = json.dumps(queryset)
+#         # message_list_serializer = MessageListSerializer(data=queryset)̥
+#         return Response(serialized, status=status.HTTP_200_OK)
+
 class ListMessagesView(generics.ListCreateAPIView):
-    queryset = MessageProcessModel.objects.all()
-    serializer_class = MessageSerializer
+    queryset = MessageListModel.objects.all()
+            # filter(from_whom=request.data['from_whom'])
+    serializer_class = MessageListSerializer
+
 
 
 class TextMessagesCount(APIView):
-    def get(self,request):
-        Message_me = MessageProcessModel.objects.count()
+    def get(self, request):
+        Message_me = MessageListModel.objects.count()
         return Response({"messagecount": Message_me}, status=status.HTTP_200_OK)

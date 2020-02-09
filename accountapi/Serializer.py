@@ -61,3 +61,4 @@ class UserProfileSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.get_or_create(user=user)
         return user
+

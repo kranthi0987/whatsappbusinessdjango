@@ -4,6 +4,7 @@ import json
 from contextlib import closing
 
 import requests
+from django.http import QueryDict
 from django.shortcuts import render
 
 # Create your views here.
@@ -14,6 +15,8 @@ from rest_framework.views import APIView
 
 from mediamanagement.models import MediaMessageModel
 from mediamanagement.serializer import MediaSerializer, MediaFileSerializer
+from messageprocess.models import MessageListModel
+from messageprocess.serializer import MessageListSerializer
 from whatsappbusiness.settings import Chat_api_sending_message, Chat_api_token, Chat_api_message, Chat_api_media, \
     SERVER_URL
 
@@ -58,6 +61,15 @@ def MediaMessageSendingView(mobilenumber, message, filename, caption):
 #         else:
 #             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+def storetodatabase(data):
+    listtt = dict({'from_whom': data["to_who"], 'to_whom': 'dsdsda',
+                   'body': 'dddd', 'message_type': 'gggg', 'file_url': 'gggg', 'content_type': 'ggg',
+                   'sent_status': True})
+    query_dict = QueryDict('', mutable=True)
+    query_dict.update(listtt)
+    message_list_serializer = MessageListSerializer(data=query_dict)
+    if (message_list_serializer.is_valid()):
+        message_list_serializer.save()
 
 class MediaFileUploadView(APIView):
     parser_class = (FileUploadParser,)
@@ -101,6 +113,14 @@ def BulkMediaMessagesSendingview(phone, fileurl, filename, caption):
     # sending_message_serializer = SendingMessageSerializer(data=message_serializer.data)
     # if sending_message_serializer.is_valid():
     json_data = {'phone': phone, 'body': fileurl, 'filename': filename, 'caption': caption}
+    listtt = dict({'from_whom': "", 'to_whom': phone,
+                   'body': caption, 'message_type': 'Multimedia', 'file_url': fileurl, 'content_type': fileurl,
+                   'sent_status': True})
+    query_dict = QueryDict('', mutable=True)
+    query_dict.update(listtt)
+    message_list_serializer = MessageListSerializer(data=query_dict)
+    if (message_list_serializer.is_valid()):
+        message_list_serializer.save()
     print(json.dumps(json_data))
     r = requests.post(Chat_api_sending_message + Chat_api_media + Chat_api_token,
                       data=json_data)
@@ -173,5 +193,5 @@ class CollageMediaMessagesView(APIView):
 
 class MultiMediaMessagesCount(APIView):
     def get(self,request):
-        Message_me = MediaMessageModel.objects.count()
+        Message_me = MessageListModel.objects.count()
         return Response({"messagecount": Message_me}, status=status.HTTP_200_OK)

@@ -24,3 +24,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 # @receiver(post_save, sender=User)
 # def save_user_profile(sender, instance, **kwargs):
 #     instance.UserProfiles.save()
+class Counter(models.Model):
+    multimedia_message_count = models.BigIntegerField(default=0)
+    text_message_count = models.BigIntegerField(default=0)
+    total_message_count = models.BigIntegerField(default=0)

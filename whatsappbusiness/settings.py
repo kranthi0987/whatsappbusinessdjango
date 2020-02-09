@@ -124,11 +124,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+    
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',  # Add this instead
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
 }
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -160,4 +162,4 @@ Chat_api_token = '?token=13l84o9ml4q0xxq4'
 Chat_api_message = 'sendMessage'
 Chat_api_sending_message = 'https://eu37.chat-api.com/instance88562/'
 Chat_api_media = 'sendFile'
-SERVER_URL = 'http://icon-rim.com:8000/'
+SERVER_URL = 'http://localhost:8000/'
