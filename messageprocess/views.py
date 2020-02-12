@@ -51,6 +51,15 @@ def BulkMessagesSendingview(mobilenumber, message):
     global r
     # sending_message_serializer = SendingMessageSerializer(data=message_serializer.data)
     # if sending_message_serializer.is_valid():
+    listtt = dict({'from_whom': "", 'to_whom': mobilenumber,
+                   'body': message, 'message_type': 'Text',
+                   'file_url': '', 'content_type': '',
+                   'sent_status': True})
+    query_dict = QueryDict('', mutable=True)
+    query_dict.update(listtt)
+    message_list_serializer = MessageListSerializer(data=query_dict)
+    if (message_list_serializer.is_valid()):
+        message_list_serializer.save()
     json_data = {'phone': mobilenumber, 'body': message}
     print(json.dumps(json_data))
     r = requests.post(Chat_api_sending_message + Chat_api_message + Chat_api_token,
@@ -93,9 +102,9 @@ class SingleMessageView(APIView):
 
     def post(self, request, *args, **kwargs):
         dddd = request.data
-        listtt = dict({'from_whom': dddd["to_who"], 'to_whom': 'dsdsda',
-                       'body': 'dddd', 'message_type': 'gggg',
-                       'file_url': 'gggg', 'content_type': 'ggg',
+        listtt = dict({'from_whom': dddd["from_whom"], 'to_whom': dddd["phone"],
+                       'body': dddd["body"], 'message_type': 'Text',
+                       'file_url': 'N/A', 'content_type': 'N/A',
                        'sent_status': True})
         query_dict = QueryDict('', mutable=True)
         query_dict.update(listtt)
@@ -108,7 +117,7 @@ class SingleMessageView(APIView):
             message_serializer.save()
             phone = request.data['phone']
             body = request.data['body']
-            # SingleMessageSendingView(phone, body)
+            SingleMessageSendingView(phone, body)
             return Response(message_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(message_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
