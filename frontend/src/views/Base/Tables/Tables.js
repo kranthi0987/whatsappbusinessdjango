@@ -65,7 +65,7 @@ class Tables extends Component {
     }
 
     componentDidMount() {
-        this.makeHttpRequestWithPage(BASEURL+"/message/listallmessages/");
+        this.makeHttpRequestWithPage(BASEURL+"message/listallmessages/");
 
     }
 

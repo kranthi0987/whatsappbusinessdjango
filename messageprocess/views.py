@@ -28,7 +28,7 @@ def SingleMessageSendingView(phone, body):
     json_data = {'phone': phone, 'body': body}
     # print(json.dumps(json_data))
     # formdata = json.dumps(json_data)
-    listtt = dict({'from_whom': dddd["to_who"], 'to_whom': phone,
+    listtt = dict({'from_whom': "", 'to_whom': phone,
                    'body': body, 'message_type': 'Text',
                    'file_url': '', 'content_type': '',
                    'sent_status': True})
