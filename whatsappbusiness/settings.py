@@ -99,9 +99,9 @@ WSGI_APPLICATION = 'whatsappbusiness.wsgi.application'
 DATABASES = {
 	'default': {
 	'ENGINE': 'django.db.backends.mysql',
-	'NAME': 'whatsappbussiness',
-	'USER': 'django',
-	'PASSWORD': 'django',
+	'NAME': 'whatsappbusiness',
+	'USER': 'root',
+	'PASSWORD': 'test',
 	'HOST': "localhost",
 	'PORT': "",
 	}
