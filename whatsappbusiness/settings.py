@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     'uploadmedia',
     'corsheaders',
     'messageprocess',
-    'mediamanagement',
-    'sslserver',
+    'mediamanagement'
 ]
 
 MIDDLEWARE = [
@@ -101,8 +100,8 @@ DATABASES = {
 	'default': {
 	'ENGINE': 'django.db.backends.mysql',
 	'NAME': 'whatsappbussiness',
-	'USER': 'root',
-	'PASSWORD': "root",
+	'USER': 'django',
+	'PASSWORD': 'django',
 	'HOST': "localhost",
 	'PORT': "",
 	}
@@ -148,7 +147,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-STATIC_URL = '/static/'
+STATIC_URL = '/assets/'
 
 STATICFILES_DIR = [
     os.path.join(BASE_DIR, 'whatsappbusiness/static')
