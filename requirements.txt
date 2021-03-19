@@ -6,7 +6,7 @@ decorator==4.4.1
 Django==2.2.6
 django-cors-headers==3.1.1
 django-phonenumber-field==4.0.0
-djangorestframework==3.10.3
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 idna==2.8
 ipdb==0.12.3
