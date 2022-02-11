@@ -22,7 +22,7 @@ pexpect==4.7.0
 phonenumbers==8.11.1
 pickleshare==0.7.5
 prompt-toolkit==3.0.2
-protobuf==3.10.0
+protobuf==3.15.0
 ptyprocess==0.6.0
 Pygments==2.5.2
 PyJWT==1.7.1
