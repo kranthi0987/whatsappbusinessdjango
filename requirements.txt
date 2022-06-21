@@ -15,7 +15,7 @@ ipython-genutils==0.2.0
 jedi==0.15.2
 mysql-connector-python==8.0.18
 mysqlclient==1.4.6
-numpy==1.17.4
+numpy==1.22.0
 pandas==0.25.3
 parso==0.5.2
 pexpect==4.7.0
